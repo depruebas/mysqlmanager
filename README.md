@@ -11,7 +11,7 @@ include "MySqlManager.php";
 
 
 create an array configuration:
-
+<pre>
 $config = array(
 	'host' => 'localhost',
 	'database' => 'mysql',
@@ -20,7 +20,7 @@ $config = array(
 	'port' => '',
 	'encoding' => 'utf8',
 );
-
+</pre>
 
 The array of connection can be in any configuration file that it and you have to include it in our code before the MysqlManager class.
 
