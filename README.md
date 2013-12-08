@@ -26,7 +26,7 @@ The array of connection can be in any configuration file that it and you have to
 
 Once you have this you can believe an instance of the class and work with it.
 
-
+<pre>
 $db = new MySqlManager( $config);
 
 $sql = "Select Host, User, Password from user refugios limit 3";
@@ -35,10 +35,10 @@ $rows = $db->ExecuteQuery( $sql);
 print( "<pre>".print_r( $rows, true)."</pre>");	
 
 $db->Close();
-
+</pre>
 
 The result of this query is an array with the information requested.
-
+<pre>
 Array
 (
   [0] => Array
@@ -62,7 +62,7 @@ Array
           [Password] => *E74858DB86EBA20BC33D0AECAE8A8108C56B17FA
       )
 )
-
+</pre>
 
 Connect( $config)
 Get an array of connection parameters.
