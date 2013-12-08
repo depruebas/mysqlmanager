@@ -65,38 +65,38 @@ Array
 </pre>
 
 <b>Connect( $config)</b>
-Get an array of connection parameters.
-opens a connection and no returns data.
-Only used if needed
-   
+Get an array of connection parameters.<br>
+opens a connection and no returns data.<br>
+Only used if needed<br>
+<br>
 <b>isConnected( $sql)  </b>
-Receives as a parameter the query to execute.
-Returns TRUE on the connection is active.
+Receives as a parameter the query to execute.<br>
+Returns TRUE on the connection is active.<br><br>
    
 <b>ExecuteNonQuery( $sql) </b>
-Receives as a parameter the query to execute.
-Executes statements INSERT, DELETE y UPDATE
+Receives as a parameter the query to execute.<br>
+Executes statements INSERT, DELETE y UPDATE<br><br>
   
 <b>ExecuteNonQueryWithRows( $sql) </b>
-Receives as a parameter the query to execute.
-Executes statements INSERT, DELETE and UPDATE and returns the number of rows affected
+Receives as a parameter the query to execute.<br>
+Executes statements INSERT, DELETE and UPDATE and returns the number of rows affected<br><br>
   
 <b>ExecuteNonQueryWithID( $sql) </b>
-Receives as a parameter the query to execute.
-Executes statements INSERT and returns the id of the last inserted if you have an AutoNumber field
+Receives as a parameter the query to execute.<br>
+Executes statements INSERT and returns the id of the last inserted if you have an AutoNumber field<br><br>
   
 <b>ExecuteQuery( $sql) </b>
-Receives as a parameter the query to execute.
-Execute a SELECT and returns an array with the result.
+Receives as a parameter the query to execute.<br>
+Execute a SELECT and returns an array with the result.<br><br>
    
 <b>ExecuteQueryAssoc( $sql) </b>
-Receives as a parameter the query to execute.
-Execute a SELECT and returns an array with the result with the field names as index.
+Receives as a parameter the query to execute.<br>
+Execute a SELECT and returns an array with the result with the field names as index.<br><br>
    
 <b>ExecuteQueryScalar( $sql) </b>
-Receives as a parameter the query to execute.
-Execute a SELECT and returns a value.
+Receives as a parameter the query to execute.<br>
+Execute a SELECT and returns a value.<br><br>
 
 <b>Close( $sql) </b>
-Close connection.
+Close connection.<br><br><br>
 
