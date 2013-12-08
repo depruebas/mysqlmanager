@@ -1,7 +1,9 @@
 mysqlmanager
 ============
 
-Clase para gestionar las conexiones y datos al MySql and get data into arrays.
+Spanish version http://www.netveloper.com/2013/12/clase-para-gestionar-las-conexiones-y-datos-al-mysql/
+
+Class to manage connections and data to MySQL and get data into arrays.
 
 Using it is very simple
 include the class in our code
