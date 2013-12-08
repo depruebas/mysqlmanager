@@ -1,6 +1,6 @@
 <?php
 /**
-*   Clase para gestionar las conexiones y datos al MySql and get data into arrays.
+*   Class to manage connections and data to MySQL and get data into arrays.
 *   Using it is very simple include the class in our code
 * 
 *   Connect( $config)
@@ -49,8 +49,7 @@
 
 class MySqlManager 
 {
-
-	private $_conn = null;
+  private $_conn = null;
   private $Connected = null;
   private $HOST = "localhost";
   private $port = "3306";
@@ -144,7 +143,7 @@ class MySqlManager
   */
   public function ExecuteNonQuery( $sql) 
   {
-  	$return = mysql_query($sql, $this->_conn);
+    $return = mysql_query($sql, $this->_conn);
     return ($return);
   }
 
@@ -191,19 +190,17 @@ class MySqlManager
     
     if  ($row = mysql_fetch_array($Result)) 
     {
-		  do 
+      do 
       {		
-				$data[] = $row;
-
-		  }
+	$data[] = $row;
+      }
       while ($row = mysql_fetch_array($Result));
-		}
-		else 
-    {
-		  $data = null;
-		}
-		
-		mysql_free_result($Result);
+      }
+      else 
+      {
+	  $data = null;
+      }
+      mysql_free_result($Result);
 
     return ($data);
   }
