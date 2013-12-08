@@ -6,9 +6,9 @@ Clase para gestionar las conexiones y datos al MySql and get data into arrays.
 Using it is very simple
 include the class in our code
 
-
+<pre>
 include "MySqlManager.php";
-
+</pre>
 
 create an array configuration:
 <pre>
@@ -32,7 +32,7 @@ $db = new MySqlManager( $config);
 $sql = "Select Host, User, Password from user refugios limit 3";
 $rows = $db->ExecuteQuery( $sql);
 
-print( "<pre>".print_r( $rows, true)."</pre>");	
+print( "&lt;pre>".print_r( $rows, true)."&lt;/pre>");	
 
 $db->Close();
 </pre>
@@ -64,39 +64,39 @@ Array
 )
 </pre>
 
-Connect( $config)
+<b>Connect( $config)</b>
 Get an array of connection parameters.
 opens a connection and no returns data.
 Only used if needed
    
-isConnected( $sql)  
+<b>isConnected( $sql)  </b>
 Receives as a parameter the query to execute.
 Returns TRUE on the connection is active.
    
-ExecuteNonQuery( $sql) 
+<b>ExecuteNonQuery( $sql) </b>
 Receives as a parameter the query to execute.
 Executes statements INSERT, DELETE y UPDATE
   
-ExecuteNonQueryWithRows( $sql) 
+<b>ExecuteNonQueryWithRows( $sql) </b>
 Receives as a parameter the query to execute.
 Executes statements INSERT, DELETE and UPDATE and returns the number of rows affected
   
-ExecuteNonQueryWithID( $sql) 
+<b>ExecuteNonQueryWithID( $sql) </b>
 Receives as a parameter the query to execute.
 Executes statements INSERT and returns the id of the last inserted if you have an AutoNumber field
   
-ExecuteQuery( $sql) 
+<b>ExecuteQuery( $sql) </b>
 Receives as a parameter the query to execute.
 Execute a SELECT and returns an array with the result.
    
-ExecuteQueryAssoc( $sql) 
+<b>ExecuteQueryAssoc( $sql) </b>
 Receives as a parameter the query to execute.
 Execute a SELECT and returns an array with the result with the field names as index.
    
-ExecuteQueryScalar( $sql) 
+<b>ExecuteQueryScalar( $sql) </b>
 Receives as a parameter the query to execute.
 Execute a SELECT and returns a value.
 
-Close( $sql) 
+<b>Close( $sql) </b>
 Close connection.
 
