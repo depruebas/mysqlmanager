@@ -1,8 +1,10 @@
 <?php
 /**
 *   Clase para gestionar las conexiones y datos al MySql and get data into arrays.
-*   
+*   Using it is very simple include the class in our code
+* 
 *   Connect( $config)
+* 
 *   Get an array of connection parameters.
 *   opens a connection and no returns data.
 *   Only used if needed
