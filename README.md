@@ -1,7 +1,7 @@
 mysqlmanager
 ============
 
-Spanish version http://www.netveloper.com/2013/12/clase-para-gestionar-las-conexiones-y-datos-al-mysql/
+Spanish version http://www.netveloper.com/clase-para-gestionar-las-conexiones-y-datos-al-mysql/
 
 Class to manage data access and data to MySQL and get data into arrays.
 
