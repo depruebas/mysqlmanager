@@ -3,7 +3,7 @@ mysqlmanager
 
 Two classes for connect to MySql
 
-MySqlManager.php uses MySQL driver
+MySqlManager.php uses MySQL driver<br>
 MySqliManager.php uses MySQLi driver
 
 Spanish version http://www.netveloper.com/clase-para-gestionar-las-conexiones-y-datos-al-mysql/
