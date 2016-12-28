@@ -14,7 +14,7 @@ Using it is very simple
 include the class in our code
 
 <pre>
-include "MySqlManager.php";
+include "MySqliManager.php";
 </pre>
 
 create an array configuration:
@@ -34,7 +34,7 @@ The array of connection can be in any configuration file that it and you have to
 Once you have this you can believe an instance of the class and work with it.
 
 <pre>
-$db = new MySqlManager( $config);
+$db = new MySqliManager( $config);
 
 $sql = "Select Host, User, Password from user refugios limit 3";
 $rows = $db->ExecuteQuery( $sql);
