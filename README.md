@@ -1,6 +1,11 @@
 mysqlmanager
 ============
 
+Two classes for connect to MySql
+
+MySqlManager.php uses MySQL driver
+MySqliManager.php uses MySQLi driver
+
 Spanish version http://www.netveloper.com/clase-para-gestionar-las-conexiones-y-datos-al-mysql/
 
 Class to manage data access and data to MySQL and get data into arrays.
