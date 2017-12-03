@@ -2,53 +2,9 @@
 # 
 #   Class to manage connections and data to MySQL and get data into arrays.
 #   Using it is very simple include the class in our code
-# 
-#   Connect( $config)
-#     Get an array of connection parameters.
-#     opens a connection and no returns data.
-#     Only used if needed
-#   
-#   isConnected( $sql)  
-#     Receives as a parameter the query to execute.
-#     Returns TRUE on the connection is active.
-#   
-#   ExecuteNonQuery( $sql) 
-#     Receives as a parameter the query to execute.
-#     Executes statements INSERT, DELETE y UPDATE
-#   
-#   ExecuteNonQueryWithRows( $sql) 
-#     Receives as a parameter the query to execute.
-#     Executes statements INSERT, DELETE and UPDATE and returns the number of rows affected
-#   
-#   ExecuteNonQueryWithID( $sql) 
-#     Receives as a parameter the query to execute.
-#     Executes statements INSERT and returns the id of the last inserted if you have an AutoNumber field
-#   
-#   ExecuteQuery( $sql) 
-#     Receives as a parameter the query to execute.
-#     Execute a SELECT and returns an array with the result.
-#   
-#   ExecuteQueryAssoc( $sql) 
-#     Receives as a parameter the query to execute.
-#     Execute a SELECT and returns an array with the result with the field names as index.
-#   
-#   ExecuteQueryScalar( $sql) 
-#     Receives as a parameter the query to execute.
-#     Execute a SELECT and returns a value.
-# 
-#   Close( $sql) 
-#   Close connection.
-#   
-#   
-# @autor         Alex A. Solano ( asolano@depruebas.com )
-# @link          http://www.netveloper.com
-# @package       MySqliManager.php
-# @since         v.0.1
-# 
-#
-class MySqliManager 
-{
 
+class MySqlDataClass
+{
   private $_conn = null;
   private $Connected = null;
   private $HOST = "localhost";
@@ -57,7 +13,9 @@ class MySqliManager
   private $password = "mysql";
   private $database = "test";
   private $encoding = "utf8";
-  
+  private $log_path = null; 
+
+
   private function debug( $var) 
   { 
     $debug = debug_backtrace();
@@ -74,8 +32,11 @@ class MySqliManager
     {
       $this->Connect( $config);
     }
-  }
 
+    # Initial path for MySql error logs
+    $this->log_path = dirname( dirname( __FILE__)) . "/logs/mysql.log";
+  
+  }
   #
   #  Connect( $sql) 
   #  Get an array of connection parameters.
@@ -91,6 +52,10 @@ class MySqliManager
       {
         $this->port = $config['port']; 
       }
+      if ( isset( $config['log_path'])) 
+      {
+        $this->log_path = $config['log_path']; 
+      }
 
       $this->HOST     = $config['host'];
       $this->username = $config['username'];
@@ -101,6 +66,13 @@ class MySqliManager
 
     if (!($this->_conn = mysqli_connect($this->HOST, $this->username, $this->password, $this->database, $this->port)))
     {
+      $error_list = mysqli_error_list( $this->_conn);
+
+      if ( !empty( $error_list))
+      {
+        error_log ( "[".date( "Y-m-d H:i:s")."] " . json_encode( $error_list) . "\n", 3, $this->log_path);
+      }
+
       trigger_error("Connecting error, host: ".$this->HOST, E_USER_ERROR);
       return;
     }
@@ -110,14 +82,20 @@ class MySqliManager
       $this->Connected = "true";
     }
 
-    /*if (!mysqli_select_db($this->database ,$this->_conn))
+    if (!mysqli_select_db( $this->_conn, $this->database))
     {
+      $error_list = mysqli_error_list( $this->_conn);
+      
+      if ( !empty( $error_list))
+      {
+        error_log ( "[".date( "Y-m-d H:i:s")."] " . json_encode( $error_list) . "\n", 3, $this->log_path);
+      }
+
       trigger_error("Connecting error, database: ".$this->database, E_USER_ERROR);
       return;
-    }*/
+    }
 
   }
-
   #
   #  isConnected( $sql) 
   #  Returns TRUE on the connection is active.
@@ -126,7 +104,6 @@ class MySqliManager
   {
     return ( $this->Connected);
   }
-
   #
   #  Close( $sql) 
   #  Close connection.
@@ -137,7 +114,6 @@ class MySqliManager
     mysqli_close( $this->_conn);
     unset ( $this->_conn);
   }
-
   #
   #  ExecuteNonQuery( $sql) 
   #  Receives as a parameter the query to execute.
@@ -148,7 +124,6 @@ class MySqliManager
     $return = mysqli_query( $this->_conn, $sql);
     return ( $return);
   }
-
   #
   #  ExecuteNonQueryWithRows( $sql) 
   #  Receives as a parameter the query to execute.
@@ -159,7 +134,6 @@ class MySqliManager
     mysqli_query( $this->_conn, $sql);
     return ( mysqli_affected_rows( $this->_conn));
   }
-
   #
   #  ExecuteNonQueryWithID( $sql) 
   #  Receives as a parameter the query to execute.
@@ -168,6 +142,8 @@ class MySqliManager
   public  function ExecuteNonQueryWithID( $sql) 
   {
     $return = mysqli_query( $this->_conn, $sql);
+
+    $error_list = mysqli_error_list( $this->_conn);
     
     if ($return) {
        $id = mysqli_insert_id( $this->_conn);
@@ -175,9 +151,14 @@ class MySqliManager
     else {
         $id = 0;
     }
+
+    if ( !empty( $error_list))
+    {
+      error_log ( "[".date( "Y-m-d H:i:s")."] " . json_encode( $error_list) . "\n", 3, $this->log_path);
+    }
+
     return ( $id);
   }
-
   #
   #  ExecuteQuery( $sql) 
   #  Receives as a parameter the query to execute.
@@ -187,6 +168,8 @@ class MySqliManager
   {      
     $Result = mysqli_query( $this->_conn, $sql);
 
+    $error_list = mysqli_error_list( $this->_conn);
+
     if  ($row = mysqli_fetch_array( $Result, MYSQLI_NUM)) 
     {
       do 
@@ -194,18 +177,21 @@ class MySqliManager
         $data[] = $row;
       }
       while ($row = mysqli_fetch_array( $Result, MYSQLI_NUM));
-      }
-      else 
-      {
-        $data = null;
-      }
+    }
+    else 
+    {
+      $data = null;
+    }
 
-      mysqli_free_result( $Result);
+    mysqli_free_result( $Result);
 
+    if ( !empty( $error_list))
+    {
+      error_log ( "[".date( "Y-m-d H:i:s")."] " . json_encode( $error_list) . "\n", 3, $this->log_path);
+    }
 
     return ( $data);
   }
-
   #
   #  ExecuteQueryAssoc( $sql) 
   #  Receives as a parameter the query to execute.
@@ -215,14 +201,16 @@ class MySqliManager
   {
       
     $Result = mysqli_query( $this->_conn, $sql);
-    
-    if  ($row = mysqli_fetch_array( $Result, MYSQLI_ASSOC))  
+
+    $error_list = mysqli_error_list( $this->_conn);
+
+    if  ( $row = mysqli_fetch_assoc( $Result)) 
     {
       do 
       {   
         $data[] = $row;
       }
-      while ($row = mysqli_fetch_array( $Result, MYSQLI_ASSOC));
+      while ($row = mysqli_fetch_assoc( $Result));
     }
     else 
     {
@@ -230,6 +218,11 @@ class MySqliManager
     }
     
     mysqli_free_result($Result);
+
+    if ( !empty( $error_list))
+    {
+      error_log ( "[".date( "Y-m-d H:i:s")."] " . json_encode( $error_list) . "\n", 3, $this->log_path);
+    }
 
     return ( $data);
   }
@@ -241,14 +234,21 @@ class MySqliManager
   #
   public function ExecuteQueryScalar( $sql) 
   {
-
     $result = mysqli_query( $this->_conn, $sql);
+
+    $error_list = mysqli_error_list( $this->_conn);
+
     $row = mysqli_fetch_array( $result);
     $Return = $row;
+
     mysqli_free_result( $result);
+    
+    if ( !empty( $error_list))
+    {
+      error_log ( "[".date( "Y-m-d H:i:s")."] " . json_encode( $error_list) . "\n", 3, $this->log_path);
+    }
 
     return ( $Return);
   }
-
 
 }
